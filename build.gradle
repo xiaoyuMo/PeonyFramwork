@@ -93,6 +93,9 @@ dependencies {
 //    compile group: 'com.esotericsoftware.kryo', name: 'kryo', version: '5.0.0-RC1' // 这个版本打包失败
     compile group: 'com.esotericsoftware.kryo', name: 'kryo', version: '2.24.0'
 
+
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.11'
+
 }
 
 buildscript {
@@ -134,6 +137,9 @@ task build_server(dependsOn: ['init_dependencies']) {
             from projectDir.absolutePath + '/script/'
             into outDir
         }
+    }
+    doLast{
+        delete buildDir.absolutePath + '/classes/main'
     }
 }
 
@@ -180,4 +186,8 @@ task build_update_config() {
             }
         }
     }
+}
+this.project.afterEvaluate{
+    delete buildDir.absolutePath + '/classes/main'
+    //这里可以添加一些版本控制信息
 }
